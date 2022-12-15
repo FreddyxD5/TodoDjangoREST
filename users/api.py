@@ -24,6 +24,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def create(self, request, pk=None):
         return Response({'message':'CREACION DE ITEM  exito'}, status = status.HTTP_201_CREATED)
+
     def partial_update(self, request, pk=None):
         return Response({'message':'Actualizado Parcial UPDATE con exito'}, status = status.HTTP_201_CREATED)
 
@@ -43,9 +44,23 @@ class UserMixinViewSet(ListModelMixin, viewsets.GenericViewSet):
     pagination_class = StandarResultsSetPagination
 
 
-    def get(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs):
         print('UserMixinViewSet-- LIST')
         return super().list(request, *args, **kwargs)
+
+    def create(self, request):
+        if isinstance(request.data, list):
+            serializer = self.get_serializer(data=request.data, many=True)
+        else:
+            serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+            # return Response({'message':'siuuu'}, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors)
+
+    
 
 
 class UserViewSetOne(

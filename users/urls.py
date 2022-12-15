@@ -5,8 +5,8 @@ from users.routers import CustomRouter
 
 router = CustomRouter()
 
-router.register('', UserViewSet, basename = 'users')
-# router.register('', UserMixinViewSet, basename = 'users')
+# router.register('', UserViewSet, basename = 'users')
+router.register('', UserMixinViewSet, basename = 'users')
 # router.register('', UserViewSetOne, basename='oneUser')
 
 urlpatterns = router.urls
