@@ -31,6 +31,6 @@ class Empleado(DictMixin, JsonMixin, Persona):
         self.datos_familia = datos_familia
 
         
-a = Empleado("jesus","54545",["amable","Respetuoso","puntual"], {"Padre":"jesus","Madre":"Maria"})
+a = Empleado("jesus","54545",["Empatico","Respetuoso","Puntual"], {"Padre":"jesus","Madre":"Maria"})
 print(a.to_dict())
 print(a.to_json())
