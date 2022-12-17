@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',    
+    'drf_yasg',
     'rest_framework',    
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
@@ -179,6 +180,17 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
+SWAGGER_SETTINGS = {    
+    'VALIDATOR_URL': 'http://localhost:8189',
+    'SECURITY_DEFINITIONS':{
+        "Auth Token inserte [Token (JWT) ]":{
+            "type":"apiKey",
+            "name":"Authorization",
+            "in":"header"
+        }
+    }
 }
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

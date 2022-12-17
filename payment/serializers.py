@@ -4,7 +4,7 @@ from payment.models import Payment, Service
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
-        fields = '__all__'
+        fields = '__all__'        
 
         
 class PaymentSerializer(serializers.ModelSerializer):

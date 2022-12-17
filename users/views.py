@@ -7,10 +7,11 @@ from rest_framework.views import APIView
 from rest_framework import viewsets
 
 
-from .serializers import SignUpSerializer, GetUserSerializer
+from .serializers import SignUpSerializer, GetUserSerializer, LoginSerializer
 from .tokens import create_jwt_pair_for_user
 from .models import Users
 
+from drf_yasg.utils import swagger_auto_schema
 
 
 class SignUpView(generics.GenericAPIView):
@@ -27,9 +28,12 @@ class SignUpView(generics.GenericAPIView):
         return Response(data = serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 
-class LoginView(APIView):
-    def post(self, request:Request):
-        print('POST BABY')
+class LoginView(generics.GenericAPIView):
+    serializer_class = LoginSerializer
+
+    # @swagger_auto_schema(operation_description="Login de Usuario que retorna un token"        
+    # )
+    def post(self, request:Request):        
         username = request.data.get("username")
         password = request.data.get("password")
         user = authenticate(username=username, password=password)
@@ -40,6 +44,8 @@ class LoginView(APIView):
             return Response(data = response, status= status.HTTP_200_OK)
         return Response(data={"message":"Invalid Username or incorrect password"})
     
+    # @swagger_auto_schema(operation_description="Retorna el usuario xd?"        
+    # )
     def get(self, request:Request):
         content = {"user":str(request.user), "auth":str(request.auth)}
         return Response(data=content, status = status.HTTP_200_OK)

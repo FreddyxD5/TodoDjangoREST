@@ -1,6 +1,6 @@
 from todo.models import Todo
 from rest_framework import viewsets
-from .serializers import TodoSerializer
+from .serializers import TodoV3Serializer
 from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -13,7 +13,7 @@ class TodoViewSetCustom(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
     def get_serializer_class(self):
-        return TodoSerializer
+        return TodoV3Serializer
 
     def list(self, request):
         page = self.paginate_queryset(self.queryset)
@@ -27,9 +27,9 @@ class TodoViewSetCustom(viewsets.ModelViewSet):
 
     def create(self, request):
         if isinstance(request.data, list):
-            serializer = TodoSerializer(request.data, many=True)
+            serializer = TodoV3Serializer(request.data, many=True)
         else:
-            serializer = TodoSerializer(request.data)
+            serializer = TodoV3Serializer(request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -38,12 +38,12 @@ class TodoViewSetCustom(viewsets.ModelViewSet):
 
     def retrieve(self, request, pk=None):
          todo = get_object_or_404(self.queryset, pk=pk)
-         serializer = TodoSerializer(todo)
+         serializer = TodoV3Serializer(todo)
          return Response(serializer.data)
 
     def update(self, request, pk=None):
         todo = get_object_or_404(self.queryset, pk=pk)
-        serializer = TodoSerializer(todo, data=request.data)
+        serializer = TodoV3Serializer(todo, data=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -53,7 +53,7 @@ class TodoViewSetCustom(viewsets.ModelViewSet):
 
     def partial_update(self, request, pk=None):
         todo = get_object_or_404(self.queryset, pk=pk)
-        serializer = TodoSerializer(todo, data=request.data, partial=True)
+        serializer = TodoV3Serializer(todo, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

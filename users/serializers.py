@@ -3,6 +3,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 from .models import Users
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
@@ -43,3 +44,10 @@ class GetUserSerializer(serializers.ModelSerializer):
         model = Users
         fields = ['username','email', 'password']
 
+
+class LoginSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(max_length=80)
+    password = serializers.CharField(min_length=8, write_only=True)
+    class Meta:
+        model = Users
+        fields = ['username','password']
